@@ -1,20 +1,22 @@
 package lat.pam.utsproject
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class OrderActivity : AppCompatActivity() {
+
+    private lateinit var foodNameTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_order)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+        // Find TextView for food name
+        foodNameTextView = findViewById(R.id.etFoodName)
+
+        // Get the food name from the intent and set it in the TextView
+        val foodName = intent.getStringExtra("foodName")
+        foodNameTextView.text = foodName ?: "Unknown"
     }
 }

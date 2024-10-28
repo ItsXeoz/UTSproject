@@ -1,14 +1,16 @@
-package lat.pam.utsproject
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import lat.pam.utsproject.Food
+import lat.pam.utsproject.R
 
-
-class FoodAdapter(private val foodList: List<Food>) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
+class FoodAdapter(
+    private val foodList: List<Food>,
+    private val onItemClick: (Food) -> Unit // Pass a lambda for the click listener
+) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout_food, parent, false)
@@ -20,6 +22,11 @@ class FoodAdapter(private val foodList: List<Food>) : RecyclerView.Adapter<FoodA
         holder.foodName.text = food.name
         holder.foodDescription.text = food.description
         holder.foodImage.setImageResource(food.imageResourceId)
+
+        // Set click listener for each item
+        holder.itemView.setOnClickListener {
+            onItemClick(food) // Pass the food item to the click listener
+        }
     }
 
     override fun getItemCount(): Int {
